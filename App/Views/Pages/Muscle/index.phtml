@@ -42,7 +42,11 @@
         <?php foreach ($this->view->muscles as $key => $muscle) {?>
             <tr>
                 <td><?php echo $key+1 ?></td>
-                <td><input type="checkbox" id="ativo_<?php echo $muscle['id_muscle'] ?>"></td>
+                <?php if($muscle['ativo']){ ?>
+                    <td><input type="checkbox" id="ativo_<?php echo $muscle['id_muscle'] ?>" checked onchange="alterarAtivo('muscle','<?php echo $muscle['id_muscle'] ?>', 0)"></td>
+                <?php }else{ ?>
+                    <td><input type="checkbox" id="ativo_<?php echo $muscle['id_muscle'] ?>"></td>
+                <?php } ?>
                 <td><?php echo $muscle['muscle'] ?></td>
                 <td class="ico">
                     <a href="/muscle/delete?id=<?php echo $muscle['id_muscle'] ?>"><i class="fa fa-close"></i></a>
@@ -53,3 +57,9 @@
         
     </tbody>
 </table>
+
+<script>
+    const alterarAtivo = (item, idItem, ativo) => {
+        console.log(item, idItem, ativo)
+    }
+</script>

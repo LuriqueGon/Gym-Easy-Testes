@@ -1,15 +1,6 @@
 <h1>Home</h1>
 
-<p>Inicio de tudo</p>
-
-<form method="POST">
-    <input type="text" name="text">
-    <input type="submit" value="Enviar">
-</form>
-
-<?php if(isset($this->view->messages) && !empty($this->view->messages)){
-    foreach ($this->view->messages as $message) {
-        echo $message['message'];
-        echo "<br><hr>";
-    }
-} ?>
+<ul>
+    <li><a href="/muscles">Musculos</a></li>
+    <li><a href="/workouts">Exercicios</a></li>
+</ul>
