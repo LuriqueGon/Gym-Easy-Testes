@@ -1,0 +1,83 @@
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    th{
+        font-weight: bolder;
+        border-bottom: 2px solid black;
+        border-right: 2px solid black;
+        padding: .6rem;
+    }
+    td{
+        border: 1px solid black;
+        text-align: center;
+    }
+    td.ico i{
+        cursor: pointer;
+    }
+</style>
+<h1>Exercicios</h1>
+
+<form  action="/workout/add" method="POST">
+    
+    <input type="text" name="workout" placeholder="Nome do Exercicio" required>
+    <p>Musculo Principal</p>
+    <select name="mainMuscle">
+        <option value="">-- Selecione um Musculo --</option>
+        <?php
+
+use App\DAO\Workout;
+
+ foreach ($this->view->muscles as $muscle) {?>
+            <option value="<?php echo $muscle['id_muscle'] ?>"><?php echo $muscle['muscle'] ?></option>
+        <?php } ?>
+    </select>
+    <p>Musculos Auxiliares</p>
+    <select name="auxMuscles[]" multiple >
+        <?php foreach ($this->view->muscles as $muscle) {?>
+            <option value="<?php echo $muscle['id_muscle'] ?>"><?php echo $muscle['muscle'] ?></option>
+        <?php } ?>
+    </select>
+    <br>
+    <br>
+    <br>
+    <input type="submit" value="Adicionar Exercicio">
+</form>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Ativo</th>
+            <th>Exercicio</th>
+            <th>Musculo Principal</th>
+            <th>Musculos Aux</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->view->workouts as $key => $workout) {?>
+            <tr>
+                <td><?php echo $key+1 ?></td>
+                <?php if($workout['ativo']){ ?>
+                    <td><input type="checkbox" id="ativo_<?php echo $muscle['id_muscle'] ?>" checked></td>
+                <?php }else{ ?>
+                    <td><input type="checkbox" id="ativo_<?php echo $muscle['id_muscle'] ?>"></td>
+                <?php } ?>
+                <td><?php echo $workout['workout'] ?></td>
+                <td><?php echo $workout['muscle'] ?></td>
+                <td>
+                    <?php foreach (Workout::getWorkoutAuxMuscles($workout['id_workout']) as $key => $auxWorkout) {
+                        echo $auxWorkout['muscle']. "<br>";
+                    }?>
+                </td>
+                <td class="ico"> 
+                    <a href="/workout/delete?id=<?php echo $workout['id_workout'] ?>"><i class="fa fa-close"></i></a>
+                    <a href="/workouts?id=<?php echo $workout['id_workout'] ?>"><i class="fa-solid fa-pen"></i></a>
+                </td>
+            </tr>
+        <?php } ?>
+    
+    </tbody>
+</table>
