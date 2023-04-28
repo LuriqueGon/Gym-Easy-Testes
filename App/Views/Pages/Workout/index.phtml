@@ -61,9 +61,9 @@ use App\DAO\Workout;
             <tr>
                 <td><?php echo $key+1 ?></td>
                 <?php if($workout['ativo']){ ?>
-                    <td><input type="checkbox" id="ativo_<?php echo $muscle['id_muscle'] ?>" checked></td>
+                    <td><input type="checkbox" id="ativo_<?php echo $workout['id_workout'] ?>" checked onchange="alterarAtivo('workout',<?php echo $workout['id_workout'] ?>, 0)"></td>
                 <?php }else{ ?>
-                    <td><input type="checkbox" id="ativo_<?php echo $muscle['id_muscle'] ?>"></td>
+                    <td><input type="checkbox" id="ativo_<?php echo $workout['id_workout'] ?>" onchange="alterarAtivo('workout',<?php echo $workout['id_workout'] ?>, 1)"></td>
                 <?php } ?>
                 <td><?php echo $workout['workout'] ?></td>
                 <td><?php echo $workout['muscle'] ?></td>

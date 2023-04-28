@@ -19,7 +19,7 @@ class MuscleController extends Action
 
 
         $this->view->title = "Muscle";
-        $this->view->muscles = Muscle::getMuscles();
+        $this->view->muscles = Muscle::getMuscles(2);
         $this->render('index');
     }
 

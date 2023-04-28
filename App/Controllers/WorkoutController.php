@@ -14,7 +14,7 @@ class WorkoutController extends Action
     {
         $this->view->title = "Workout";
         $this->view->muscles = Muscle::getMuscles();
-        $this->view->workouts = Workout::getWorkoutsMainMuscles();
+        $this->view->workouts = Workout::getWorkoutsMainMuscles(2);
 
         $this->render('index');
     }
@@ -31,5 +31,11 @@ class WorkoutController extends Action
 
         foreach ($_POST['auxMuscles'] as $aux) Workout::setMuscleWorkout($aux,$idWorkout,false);
         Message::setMessage('O Exercicio '. $_POST['workout']. 'foi adicionado com sucesso', 'success', 'back');
+    }
+
+    public function delete()
+    {
+        Workout::deleteWorkout($_GET['id']);
+        Message::setMessage('O Exercicio de id '. $_GET['id']. 'foi Deletado com sucesso', 'success', 'back');
     }
 }

@@ -6,3 +6,9 @@ $routes['home'] = array(
     'controller' => 'IndexController',
     'action' => 'index'
 );
+$routes['alterarAtivo'] = array(
+    'route' => '/alterarAtivo',
+    'method' => 'POST',
+    'controller' => 'IndexController',
+    'action' => 'alterarAtivo'
+);

@@ -41,16 +41,30 @@ Class Workout extends SQL
         return $sql->selectAll("SELECT * FROM ". Workout::TABLE_NAME. ' ORDER BY workout ASC');
     }
 
-    public static function getWorkoutsMainMuscles()
+    public static function getWorkoutsMainMuscles(Int $ativo = 1)
     {
         $sql = new SQL;
+
+        if($ativo == 2){
+            return $sql->selectAll("
+                SELECT w.ativo, w.workout,  m.muscle, w.id_workout, wm.id_muscle
+                FROM ". Workout::TABLE_NAME ." as w
+                INNER JOIN ".Workout::AUXTABLE_NAME. " as wm using(id_workout)
+                INNER JOIN ".Muscle::TABLE_NAME. " as m USING(id_muscle)
+                WHERE wm.main_muscle = true
+            ");
+        }
+
         return $sql->selectAll("
             SELECT w.ativo, w.workout,  m.muscle, w.id_workout, wm.id_muscle
             FROM ". Workout::TABLE_NAME ." as w
             INNER JOIN ".Workout::AUXTABLE_NAME. " as wm using(id_workout)
             INNER JOIN ".Muscle::TABLE_NAME. " as m USING(id_muscle)
-            WHERE wm.main_muscle = true
-        ");
+            WHERE wm.main_muscle = true AND w.ativo = ?
+        ", array(
+            $ativo
+        ));
+        
     }
 
     public static function getWorkoutAuxMuscles(Int $idWorkout)
@@ -66,10 +80,6 @@ Class Workout extends SQL
             $idWorkout
         ));
     }
-
-    
-
-    
 
     public static function getWorkout($id)
     {
@@ -100,6 +110,16 @@ Class Workout extends SQL
         $sql = new SQL;
         $sql->query('UPDATE '. Workout::TABLE_NAME .' SET workout = ? WHERE id_workout = ?', array(
             $workout,
+            $id
+        ));
+    }
+
+    
+    public static function alterarAtivo(Int $id, Bool $ativo)
+    {
+        $sql = new SQL;
+        $sql->query('UPDATE '. Workout::TABLE_NAME .' SET ativo = ? WHERE id_workout = ?', array(
+            $ativo,
             $id
         ));
     }
